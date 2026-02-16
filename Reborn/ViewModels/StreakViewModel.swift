@@ -5,67 +5,100 @@ import SwiftUI
 @MainActor
 @Observable
 final class StreakViewModel {
-    private var modelContext: ModelContext?
-    private var timer: Timer?
+    // MARK: - Dependencies
 
-    var currentStreak: Streak?
-    var allStreaks: [Streak] = []
+    private let streakService: StreakDataService
+    private let dateCalculator: DateCalculationService
+    private let errorHandler: ErrorHandlingService
+
+    // MARK: - State
+
+    private var timer: Timer?
+    private(set) var currentStreak: Streak?
+    private(set) var allStreaks: [Streak] = []
+    private(set) var error: AppError?
+    private(set) var isLoading = false
 
     // Live time components
-    var days: Int = 0
-    var hours: Int = 0
-    var minutes: Int = 0
-    var seconds: Int = 0
+    private(set) var days: Int = 0
+    private(set) var hours: Int = 0
+    private(set) var minutes: Int = 0
+    private(set) var seconds: Int = 0
 
-    func setup(modelContext: ModelContext) {
-        self.modelContext = modelContext
-        fetchStreaks()
+    // MARK: - Initialization
+
+    init(
+        streakService: StreakDataService,
+        dateCalculator: DateCalculationService,
+        errorHandler: ErrorHandlingService
+    ) {
+        self.streakService = streakService
+        self.dateCalculator = dateCalculator
+        self.errorHandler = errorHandler
+    }
+
+    /// Convenience initializer for previews
+    convenience init() {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: Streak.self, JournalEntry.self, configurations: config)
+        let context = container.mainContext
+        self.init(
+            streakService: SwiftDataStreakService(modelContext: context),
+            dateCalculator: StreakTimeCalculator(),
+            errorHandler: AppErrorHandler()
+        )
+    }
+
+    // MARK: - Setup
+
+    func setup() async {
+        await fetchStreaks()
         startTimer()
     }
 
-    private func fetchStreaks() {
-        guard let modelContext else { return }
+    // MARK: - Data Operations
 
-        let descriptor = FetchDescriptor<Streak>(
-            sortBy: [SortDescriptor(\.startDate, order: .reverse)]
-        )
+    func fetchStreaks() async {
+        isLoading = true
+        defer { isLoading = false }
 
         do {
-            allStreaks = try modelContext.fetch(descriptor)
-            currentStreak = allStreaks.first(where: { $0.isActive })
+            allStreaks = try await streakService.fetchAll()
+            currentStreak = try await streakService.fetchActive()
 
             if currentStreak == nil {
-                startNewStreak()
+                try await startNewStreak()
             }
 
             updateTimeComponents()
         } catch {
-            print("Failed to fetch streaks: \(error)")
+            self.error = AppError.from(error)
+            errorHandler.log(error, context: "StreakViewModel.fetchStreaks")
         }
     }
 
-    func startNewStreak() {
-        guard let modelContext else { return }
-
-        let newStreak = Streak()
-        modelContext.insert(newStreak)
-        currentStreak = newStreak
-
-        try? modelContext.save()
-        fetchStreaks()
+    func startNewStreak() async throws {
+        do {
+            currentStreak = try await streakService.startNewStreak()
+            await fetchStreaks()
+        } catch {
+            self.error = AppError.from(error)
+            errorHandler.log(error, context: "StreakViewModel.startNewStreak")
+            throw error
+        }
     }
 
-    func resetStreak() {
-        guard let modelContext, let currentStreak else { return }
-
-        currentStreak.isActive = false
-        currentStreak.endDate = Date.now
-
-        try? modelContext.save()
-
-        // Start a new streak
-        startNewStreak()
+    func resetStreak() async {
+        do {
+            try await streakService.endCurrentStreak()
+            try await startNewStreak()
+        } catch {
+            self.error = AppError.from(error)
+            errorHandler.log(error, context: "StreakViewModel.resetStreak")
+        }
     }
+
+    // MARK: - Computed Properties
 
     var longestStreak: Int {
         allStreaks.map { $0.days }.max() ?? 0
@@ -79,9 +112,19 @@ final class StreakViewModel {
         allStreaks.count
     }
 
+    var timeComponents: TimeComponents {
+        TimeComponents(days: days, hours: hours, minutes: minutes, seconds: seconds)
+    }
+
+    func formattedDuration() -> String {
+        timeComponents.formattedDuration
+    }
+
+    // MARK: - Timer
+
     private func startTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: Constants.Timer.streakUpdateInterval, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.updateTimeComponents()
             }
@@ -97,23 +140,21 @@ final class StreakViewModel {
             return
         }
 
-        days = currentStreak.days
-        hours = currentStreak.hours
-        minutes = currentStreak.minutes
-        seconds = currentStreak.seconds
+        let components = dateCalculator.components(from: currentStreak.startDate, to: Date.now)
+        days = components.days
+        hours = components.hours
+        minutes = components.minutes
+        seconds = components.seconds
     }
 
-    func formattedDuration() -> String {
-        if days > 0 {
-            return "\(days)d \(hours)h \(minutes)m"
-        } else if hours > 0 {
-            return "\(hours)h \(minutes)m \(seconds)s"
-        } else {
-            return "\(minutes)m \(seconds)s"
-        }
+    // MARK: - Error Handling
+
+    func clearError() {
+        error = nil
     }
 
-    deinit {
+    func stopTimer() {
         timer?.invalidate()
+        timer = nil
     }
 }

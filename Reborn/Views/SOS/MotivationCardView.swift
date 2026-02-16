@@ -4,24 +4,32 @@ struct MotivationCardView: View {
     let quote: Quote
 
     var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "lightbulb.fill")
-                .font(.title)
-                .foregroundStyle(Theme.violet)
+        VStack(spacing: Theme.paddingMedium) {
+            // Quote icon
+            ZStack {
+                Circle()
+                    .fill(Theme.royalViolet.opacity(0.15))
+                    .frame(width: 50, height: 50)
+
+                Image(systemName: "quote.opening")
+                    .font(.title2)
+                    .foregroundStyle(Theme.royalViolet)
+            }
 
             Text(quote.text)
                 .font(.body)
-                .foregroundStyle(.white)
+                .foregroundStyle(Theme.textPrimary)
                 .multilineTextAlignment(.center)
                 .italic()
+                .lineSpacing(4)
 
-            Text("- \(quote.author)")
+            Text("— \(quote.author)")
                 .font(.caption)
                 .foregroundStyle(Theme.textTertiary)
         }
-        .padding(24)
+        .padding(Theme.paddingLarge)
         .frame(maxWidth: .infinity)
-        .cardStyle()
+        .cinematicCard(glowColor: Theme.royalViolet)
     }
 }
 
@@ -30,12 +38,21 @@ struct MotivationCardsSection: View {
     private let quotes = Quotes.motivational.shuffled()
 
     var body: some View {
-        VStack(spacing: 16) {
-            Text("Stay Strong")
-                .font(.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(.white)
+        VStack(spacing: Theme.paddingLarge) {
+            // Header
+            VStack(spacing: 8) {
+                Text("STAY STRONG")
+                    .font(Theme.Typography.credits)
+                    .foregroundStyle(Theme.crimson)
+                    .tracking(3)
 
+                Text("You are stronger than this urge")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Theme.textPrimary)
+            }
+
+            // Quote carousel
             TabView(selection: $currentIndex) {
                 ForEach(Array(quotes.enumerated()), id: \.element.id) { index, quote in
                     MotivationCardView(quote: quote)
@@ -44,27 +61,41 @@ struct MotivationCardsSection: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .automatic))
-            .frame(height: 220)
+            .frame(height: 240)
 
             // Brain Science Fact
-            VStack(spacing: 8) {
-                HStack {
+            brainScienceFact
+        }
+    }
+
+    private var brainScienceFact: some View {
+        VStack(spacing: 12) {
+            HStack {
+                ZStack {
+                    Circle()
+                        .fill(Theme.successGreen.opacity(0.15))
+                        .frame(width: 36, height: 36)
+
                     Image(systemName: "brain.head.profile")
-                        .foregroundStyle(Theme.successGreen)
-                    Text("Brain Science")
                         .font(.subheadline)
-                        .fontWeight(.semibold)
                         .foregroundStyle(Theme.successGreen)
                 }
 
-                Text(Quotes.randomBrainFact())
-                    .font(.caption)
-                    .foregroundStyle(Theme.textSecondary)
-                    .multilineTextAlignment(.center)
+                Text("Brain Science")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Theme.successGreen)
+
+                Spacer()
             }
-            .padding()
-            .cardStyle()
+
+            Text(Quotes.randomBrainFact())
+                .font(.caption)
+                .foregroundStyle(Theme.textSecondary)
+                .lineSpacing(3)
         }
+        .padding(Theme.paddingMedium)
+        .cinematicCard(glowColor: Theme.successGreen)
     }
 }
 

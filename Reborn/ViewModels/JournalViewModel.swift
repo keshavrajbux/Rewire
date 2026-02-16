@@ -5,51 +5,100 @@ import SwiftUI
 @MainActor
 @Observable
 final class JournalViewModel {
-    private var modelContext: ModelContext?
+    // MARK: - Dependencies
 
-    var entries: [JournalEntry] = []
+    private let journalService: JournalDataService
+    private let errorHandler: ErrorHandlingService
 
-    func setup(modelContext: ModelContext) {
-        self.modelContext = modelContext
-        fetchEntries()
+    // MARK: - State
+
+    private(set) var entries: [JournalEntry] = []
+    private(set) var error: AppError?
+    private(set) var isLoading = false
+
+    // MARK: - Initialization
+
+    init(
+        journalService: JournalDataService,
+        errorHandler: ErrorHandlingService
+    ) {
+        self.journalService = journalService
+        self.errorHandler = errorHandler
     }
 
-    func fetchEntries() {
-        guard let modelContext else { return }
-
-        let descriptor = FetchDescriptor<JournalEntry>(
-            sortBy: [SortDescriptor(\.date, order: .reverse)]
+    /// Convenience initializer for previews
+    convenience init() {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: Streak.self, JournalEntry.self, configurations: config)
+        let context = container.mainContext
+        self.init(
+            journalService: SwiftDataJournalService(modelContext: context),
+            errorHandler: AppErrorHandler()
         )
+    }
+
+    // MARK: - Setup
+
+    func setup() async {
+        await fetchEntries()
+    }
+
+    // MARK: - Data Operations
+
+    func fetchEntries() async {
+        isLoading = true
+        defer { isLoading = false }
 
         do {
-            entries = try modelContext.fetch(descriptor)
+            entries = try await journalService.fetchAll()
         } catch {
-            print("Failed to fetch journal entries: \(error)")
+            self.error = AppError.from(error)
+            errorHandler.log(error, context: "JournalViewModel.fetchEntries")
         }
     }
 
-    func addEntry(energy: Int, confidence: Int, focus: Int, mood: Int, note: String?) {
-        guard let modelContext else { return }
+    func addEntry(energy: Int, confidence: Int, focus: Int, mood: Int, note: String?) async throws {
+        // Input validation
+        guard (Constants.Mood.range).contains(energy) else {
+            throw AppError.validationFailed("Energy must be between \(Constants.Mood.minScore) and \(Constants.Mood.maxScore)")
+        }
+        guard (Constants.Mood.range).contains(confidence) else {
+            throw AppError.validationFailed("Confidence must be between \(Constants.Mood.minScore) and \(Constants.Mood.maxScore)")
+        }
+        guard (Constants.Mood.range).contains(focus) else {
+            throw AppError.validationFailed("Focus must be between \(Constants.Mood.minScore) and \(Constants.Mood.maxScore)")
+        }
+        guard (Constants.Mood.range).contains(mood) else {
+            throw AppError.validationFailed("Mood must be between \(Constants.Mood.minScore) and \(Constants.Mood.maxScore)")
+        }
 
-        let entry = JournalEntry(
-            energy: energy,
-            confidence: confidence,
-            focus: focus,
-            mood: mood,
-            note: note?.isEmpty == true ? nil : note
-        )
-
-        modelContext.insert(entry)
-        try? modelContext.save()
-        fetchEntries()
+        do {
+            _ = try await journalService.createEntry(
+                energy: energy,
+                confidence: confidence,
+                focus: focus,
+                mood: mood,
+                note: note
+            )
+            await fetchEntries()
+        } catch {
+            self.error = AppError.from(error)
+            errorHandler.log(error, context: "JournalViewModel.addEntry")
+            throw error
+        }
     }
 
-    func deleteEntry(_ entry: JournalEntry) {
-        guard let modelContext else { return }
-        modelContext.delete(entry)
-        try? modelContext.save()
-        fetchEntries()
+    func deleteEntry(_ entry: JournalEntry) async {
+        do {
+            try await journalService.delete(entry)
+            await fetchEntries()
+        } catch {
+            self.error = AppError.from(error)
+            errorHandler.log(error, context: "JournalViewModel.deleteEntry")
+        }
     }
+
+    // MARK: - Computed Properties
 
     var hasCheckedInToday: Bool {
         guard let latest = entries.first else { return false }
@@ -68,5 +117,11 @@ final class JournalViewModel {
     func entriesForPeriod(days: Int) -> [JournalEntry] {
         let cutoff = Calendar.current.date(byAdding: .day, value: -days, to: .now) ?? .now
         return entries.filter { $0.date >= cutoff }
+    }
+
+    // MARK: - Error Handling
+
+    func clearError() {
+        error = nil
     }
 }

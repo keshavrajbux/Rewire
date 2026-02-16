@@ -9,57 +9,127 @@ struct StreakRingView: View {
 
     @State private var animatedProgress: Double = 0
     @State private var pulseScale: CGFloat = 1.0
+    @State private var ambientGlow: CGFloat = 0.3
+    @State private var isVisible = false
+
+    private let ringSize: CGFloat = Constants.Layout.streakRingSize
+    private let lineWidth: CGFloat = Constants.Layout.streakRingLineWidth
 
     var body: some View {
         ZStack {
-            // Outer glow
+            // Ambient background glow
             Circle()
-                .stroke(Theme.electricBlue.opacity(0.1), lineWidth: 30)
-                .frame(width: 240, height: 240)
-
-            // Background ring
-            Circle()
-                .stroke(Color.white.opacity(0.1), lineWidth: 12)
-                .frame(width: 240, height: 240)
-
-            // Progress ring
-            Circle()
-                .trim(from: 0, to: animatedProgress)
-                .stroke(
-                    Theme.streakRingGradient,
-                    style: StrokeStyle(lineWidth: 12, lineCap: .round)
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            Theme.neonBlue.opacity(ambientGlow * 0.3),
+                            Theme.royalViolet.opacity(ambientGlow * 0.15),
+                            .clear
+                        ],
+                        center: .center,
+                        startRadius: ringSize * 0.3,
+                        endRadius: ringSize * 0.8
+                    )
                 )
-                .frame(width: 240, height: 240)
-                .rotationEffect(.degrees(-90))
-                .shadow(color: Theme.electricBlue.opacity(0.5), radius: 8)
+                .frame(width: ringSize * 1.3, height: ringSize * 1.3)
+                .blur(radius: 30)
+
+            // Outer glow ring
+            Circle()
+                .stroke(
+                    LinearGradient(
+                        colors: [
+                            Theme.neonBlue.opacity(0.15),
+                            Theme.royalViolet.opacity(0.1)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 30
+                )
+                .frame(width: ringSize, height: ringSize)
+                .blur(radius: 10)
+
+            // Background ring track
+            Circle()
+                .stroke(Theme.textPrimary.opacity(0.1), lineWidth: lineWidth)
+                .frame(width: ringSize, height: ringSize)
+
+            // Progress ring with glow
+            ZStack {
+                // Glow layer
+                Circle()
+                    .trim(from: 0, to: animatedProgress)
+                    .stroke(
+                        Theme.streakRingGradient,
+                        style: StrokeStyle(lineWidth: lineWidth + 8, lineCap: .round)
+                    )
+                    .frame(width: ringSize, height: ringSize)
+                    .rotationEffect(.degrees(-90))
+                    .blur(radius: 8)
+                    .opacity(0.6)
+
+                // Main ring
+                Circle()
+                    .trim(from: 0, to: animatedProgress)
+                    .stroke(
+                        Theme.streakRingGradient,
+                        style: StrokeStyle(lineWidth: lineWidth, lineCap: .round)
+                    )
+                    .frame(width: ringSize, height: ringSize)
+                    .rotationEffect(.degrees(-90))
+            }
+            .shadow(color: Theme.neonBlue.opacity(0.5), radius: 12)
+            .shadow(color: Theme.royalViolet.opacity(0.3), radius: 20)
 
             // Inner content
-            VStack(spacing: 4) {
+            VStack(spacing: 6) {
+                // Day counter with gradient
                 Text("\(days)")
-                    .font(.system(size: 64, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(Theme.Typography.heroDisplay)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Theme.textPrimary, Theme.textSecondary],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
                     .contentTransition(.numericText())
+                    .shadow(color: Theme.sunnyYellow.opacity(0.3), radius: 10)
 
+                // Label
                 Text(days == 1 ? "DAY" : "DAYS")
-                    .font(.caption)
-                    .fontWeight(.semibold)
+                    .font(Theme.Typography.credits)
                     .foregroundStyle(Theme.textSecondary)
-                    .tracking(3)
+                    .tracking(4)
 
+                // Time display
                 Text(timeString)
-                    .font(.system(size: 16, weight: .medium, design: .monospaced))
-                    .foregroundStyle(Theme.electricBlue)
-                    .padding(.top, 4)
+                    .font(Theme.Typography.timerMono)
+                    .foregroundStyle(Theme.neonBlue)
+                    .padding(.top, 8)
+                    .contentTransition(.numericText())
             }
             .scaleEffect(pulseScale)
         }
+        .drawingGroup() // GPU acceleration
         .onAppear {
-            withAnimation(.spring(duration: 1.2)) {
+            // Animate ring fill
+            withAnimation(.spring(duration: 1.2).delay(0.2)) {
                 animatedProgress = progress
             }
-            withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
-                pulseScale = 1.03
+
+            // Subtle pulse animation
+            withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) {
+                pulseScale = 1.02
             }
+
+            // Ambient glow pulse
+            withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)) {
+                ambientGlow = 0.6
+            }
+
+            isVisible = true
         }
         .onChange(of: progress) { _, newValue in
             withAnimation(.spring(duration: 0.5)) {
@@ -75,7 +145,12 @@ struct StreakRingView: View {
 
 #Preview {
     ZStack {
-        GradientBackground()
-        StreakRingView(days: 14, hours: 6, minutes: 32, seconds: 45, progress: 0.47)
+        Theme.backgroundGradient.ignoresSafeArea()
+
+        VStack(spacing: 40) {
+            StreakRingView(days: 14, hours: 6, minutes: 32, seconds: 45, progress: 0.47)
+
+            StreakRingView(days: 0, hours: 2, minutes: 15, seconds: 30, progress: 0.1)
+        }
     }
 }

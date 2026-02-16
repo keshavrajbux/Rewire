@@ -8,6 +8,8 @@ struct HomeView: View {
     @State private var showResetAlert = false
     @State private var showSOS = false
     @State private var dailyQuote = Quotes.randomQuote()
+    @State private var scrollOffset: CGFloat = 0
+    @State private var isContentVisible = false
 
     var body: some View {
         NavigationStack {
@@ -15,8 +17,8 @@ struct HomeView: View {
                 GradientBackground()
 
                 ScrollView {
-                    VStack(spacing: Theme.paddingLarge) {
-                        // Streak Ring
+                    LazyVStack(spacing: Theme.paddingLarge) {
+                        // Hero Streak Ring with parallax
                         StreakRingView(
                             days: streakVM.days,
                             hours: streakVM.hours,
@@ -24,56 +26,52 @@ struct HomeView: View {
                             seconds: streakVM.seconds,
                             progress: milestoneVM.progress(currentDays: streakVM.days)
                         )
-                        .padding(.top, Theme.paddingLarge)
+                        .padding(.top, Theme.paddingXL)
+                        .staggeredAppear(index: 0, isVisible: isContentVisible)
 
-                        // Next milestone
+                        // Next milestone indicator
                         if let next = milestoneVM.nextMilestone {
-                            HStack {
-                                Image(systemName: next.icon)
-                                    .foregroundStyle(Theme.violet)
-                                Text("Next: \(next.title)")
-                                    .font(.subheadline)
-                                    .foregroundStyle(Theme.textSecondary)
-                                if let daysLeft = milestoneVM.daysUntilNext(currentDays: streakVM.days) {
-                                    Text("(\(daysLeft) days)")
-                                        .font(.caption)
-                                        .foregroundStyle(Theme.textTertiary)
-                                }
-                            }
+                            nextMilestoneCard(next)
+                                .staggeredAppear(index: 1, isVisible: isContentVisible)
                         }
 
-                        // Quick Stats Row
-                        HStack(spacing: 12) {
-                            StatCard(title: "Longest", value: "\(streakVM.longestStreak)", unit: "days", icon: "trophy.fill")
-                            StatCard(title: "Total Focus", value: "\(streakVM.totalCleanDays)", unit: "days", icon: "calendar")
-                            StatCard(title: "Journal", value: "\(journalVM.entries.count)", unit: "entries", icon: "book.fill")
-                        }
-                        .padding(.horizontal)
+                        // Quick Stats Carousel
+                        QuickStatsCarousel(stats: [
+                            .init(
+                                title: "Longest",
+                                value: "\(streakVM.longestStreak)",
+                                unit: "days",
+                                icon: "trophy.fill",
+                                color: Theme.gold
+                            ),
+                            .init(
+                                title: "Total Focus",
+                                value: "\(streakVM.totalCleanDays)",
+                                unit: "days",
+                                icon: "calendar",
+                                color: Theme.successGreen
+                            ),
+                            .init(
+                                title: "Journal",
+                                value: "\(journalVM.entries.count)",
+                                unit: "entries",
+                                icon: "book.fill",
+                                color: Theme.royalViolet
+                            ),
+                            .init(
+                                title: "Avg Mood",
+                                value: String(format: "%.1f", journalVM.averageMood),
+                                unit: "/10",
+                                icon: "face.smiling",
+                                color: Theme.neonBlue
+                            )
+                        ])
+                        .staggeredAppear(index: 2, isVisible: isContentVisible)
 
-                        // Daily Quote Card
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Image(systemName: "quote.opening")
-                                    .foregroundStyle(Theme.violet)
-                                Text("Daily Inspiration")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(Theme.textSecondary)
-                            }
-
-                            Text(dailyQuote.text)
-                                .font(.body)
-                                .foregroundStyle(Theme.textPrimary)
-                                .italic()
-
-                            Text("- \(dailyQuote.author)")
-                                .font(.caption)
-                                .foregroundStyle(Theme.textTertiary)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                        .cardStyle()
-                        .padding(.horizontal)
+                        // Cinematic Quote Card
+                        quoteCard
+                            .padding(.horizontal, Theme.paddingLarge)
+                            .staggeredAppear(index: 3, isVisible: isContentVisible)
 
                         // SOS Button
                         GlowingButton(
@@ -83,23 +81,13 @@ struct HomeView: View {
                         ) {
                             showSOS = true
                         }
+                        .staggeredAppear(index: 4, isVisible: isContentVisible)
 
                         // Reset Button
-                        Button {
-                            showResetAlert = true
-                        } label: {
-                            HStack {
-                                Image(systemName: "arrow.counterclockwise")
-                                Text("I Slipped")
-                            }
-                            .font(.subheadline)
-                            .foregroundStyle(Theme.textTertiary)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 20)
-                            .background(Color.white.opacity(0.05))
-                            .clipShape(Capsule())
-                        }
-                        .padding(.bottom, Theme.paddingLarge)
+                        resetButton
+                            .staggeredAppear(index: 5, isVisible: isContentVisible)
+
+                        Spacer(minLength: 100)
                     }
                 }
             }
@@ -108,8 +96,8 @@ struct HomeView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
             .alert("It's Okay", isPresented: $showResetAlert) {
                 Button("Reset Streak", role: .destructive) {
-                    withAnimation {
-                        streakVM.resetStreak()
+                    Task {
+                        await streakVM.resetStreak()
                     }
                 }
                 Button("Cancel", role: .cancel) {}
@@ -119,35 +107,116 @@ struct HomeView: View {
             .fullScreenCover(isPresented: $showSOS) {
                 SOSView()
             }
+            .onAppear {
+                withAnimation(Animations.smooth.delay(0.1)) {
+                    isContentVisible = true
+                }
+            }
         }
     }
-}
 
-struct StatCard: View {
-    let title: String
-    let value: String
-    let unit: String
-    let icon: String
+    // MARK: - Components
 
-    var body: some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon)
-                .font(.title3)
-                .foregroundStyle(Theme.electricBlue)
+    private func nextMilestoneCard(_ milestone: Milestone) -> some View {
+        HStack(spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(Theme.royalViolet.opacity(0.2))
+                    .frame(width: 44, height: 44)
 
-            Text(value)
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(.white)
+                Image(systemName: milestone.icon)
+                    .font(.title3)
+                    .foregroundStyle(Theme.royalViolet)
+            }
 
-            Text(unit)
-                .font(.caption2)
-                .foregroundStyle(Theme.textTertiary)
-                .textCase(.uppercase)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Next: \(milestone.title)")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundStyle(Theme.textPrimary)
+
+                if let daysLeft = milestoneVM.daysUntilNext(currentDays: streakVM.days) {
+                    Text("\(daysLeft) days to go")
+                        .font(.caption)
+                        .foregroundStyle(Theme.textTertiary)
+                }
+            }
+
+            Spacer()
+
+            // Progress ring
+            ZStack {
+                Circle()
+                    .stroke(Theme.royalViolet.opacity(0.2), lineWidth: 3)
+                    .frame(width: 40, height: 40)
+
+                Circle()
+                    .trim(from: 0, to: milestoneVM.progress(currentDays: streakVM.days))
+                    .stroke(Theme.royalViolet, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                    .frame(width: 40, height: 40)
+                    .rotationEffect(.degrees(-90))
+            }
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 12)
-        .cardStyle()
+        .padding(Theme.paddingMedium)
+        .cardStyle(elevation: .raised)
+        .padding(.horizontal, Theme.paddingLarge)
+    }
+
+    private var quoteCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "quote.opening")
+                    .font(.title2)
+                    .foregroundStyle(Theme.royalViolet)
+
+                Spacer()
+
+                Text("Daily Inspiration")
+                    .font(Theme.Typography.credits)
+                    .foregroundStyle(Theme.textTertiary)
+                    .textCase(.uppercase)
+                    .tracking(2)
+            }
+
+            Text(dailyQuote.text)
+                .font(.body)
+                .foregroundStyle(Theme.textPrimary)
+                .italic()
+                .lineSpacing(4)
+
+            HStack {
+                Spacer()
+                Text("— \(dailyQuote.author)")
+                    .font(.caption)
+                    .foregroundStyle(Theme.textSecondary)
+            }
+        }
+        .padding(Theme.paddingLarge)
+        .cinematicCard(glowColor: Theme.royalViolet)
+    }
+
+    private var resetButton: some View {
+        Button {
+            showResetAlert = true
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "arrow.counterclockwise")
+                Text("I Slipped")
+            }
+            .font(.subheadline)
+            .foregroundStyle(Theme.textTertiary)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 24)
+            .background(
+                Capsule()
+                    .fill(Theme.textPrimary.opacity(0.05))
+            )
+            .overlay(
+                Capsule()
+                    .stroke(Theme.textPrimary.opacity(0.1), lineWidth: 1)
+            )
+        }
+        .padding(.bottom, Theme.paddingLarge)
     }
 }
 
@@ -157,5 +226,5 @@ struct StatCard: View {
         milestoneVM: MilestoneViewModel(),
         journalVM: JournalViewModel()
     )
-    .preferredColorScheme(.dark)
+    .preferredColorScheme(.light)
 }

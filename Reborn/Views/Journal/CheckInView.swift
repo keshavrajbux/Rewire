@@ -9,6 +9,9 @@ struct CheckInView: View {
     @State private var focus: Double = 5
     @State private var mood: Double = 5
     @State private var note: String = ""
+    @State private var isSaving = false
+    @State private var showError = false
+    @State private var errorMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -16,13 +19,12 @@ struct CheckInView: View {
                 GradientBackground()
 
                 ScrollView {
-                    VStack(spacing: 16) {
+                    LazyVStack(spacing: Theme.paddingMedium) {
                         // Header
                         VStack(spacing: 8) {
                             Text("How are you feeling?")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.white)
+                                .font(Theme.Typography.title)
+                                .foregroundStyle(Theme.textPrimary)
 
                             Text("Track your mental clarity and presence")
                                 .font(.subheadline)
@@ -35,7 +37,7 @@ struct CheckInView: View {
                             title: "Energy",
                             icon: "bolt.fill",
                             value: $energy,
-                            color: .yellow
+                            color: Theme.gold
                         )
 
                         MoodSliderView(
@@ -49,14 +51,14 @@ struct CheckInView: View {
                             title: "Focus",
                             icon: "eye.fill",
                             value: $focus,
-                            color: Theme.electricBlue
+                            color: Theme.neonBlue
                         )
 
                         MoodSliderView(
                             title: "Mood",
-                            icon: "face.smiling",
+                            icon: "heart.fill",
                             value: $mood,
-                            color: Theme.violet
+                            color: Theme.royalViolet
                         )
 
                         // Note
@@ -73,27 +75,28 @@ struct CheckInView: View {
                             TextEditor(text: $note)
                                 .frame(minHeight: 100)
                                 .scrollContentBackground(.hidden)
-                                .foregroundStyle(.white)
-                                .padding(8)
-                                .background(Color.white.opacity(0.05))
+                                .foregroundStyle(Theme.textPrimary)
+                                .padding(12)
+                                .background(Theme.textPrimary.opacity(0.03))
                                 .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
+                                        .stroke(Theme.textPrimary.opacity(0.1), lineWidth: 1)
+                                )
                         }
                         .padding()
                         .cardStyle()
 
                         // Save Button
-                        GlowingButton(title: "Save Check-In", icon: "checkmark.circle.fill") {
-                            journalVM.addEntry(
-                                energy: Int(energy),
-                                confidence: Int(confidence),
-                                focus: Int(focus),
-                                mood: Int(mood),
-                                note: note
-                            )
-                            dismiss()
+                        GlowingButton(
+                            title: isSaving ? "Saving..." : "Save Check-In",
+                            icon: isSaving ? nil : "checkmark.circle.fill"
+                        ) {
+                            saveEntry()
                         }
+                        .disabled(isSaving)
                         .padding(.top, 8)
-                        .padding(.bottom, 40)
+                        .padding(.bottom, 60)
                     }
                     .padding(.horizontal)
                 }
@@ -106,6 +109,37 @@ struct CheckInView: View {
                     Button("Cancel") { dismiss() }
                         .foregroundStyle(Theme.textSecondary)
                 }
+            }
+            .alert("Error", isPresented: $showError) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(errorMessage)
+            }
+        }
+    }
+
+    private func saveEntry() {
+        isSaving = true
+
+        Task {
+            do {
+                try await journalVM.addEntry(
+                    energy: Int(energy),
+                    confidence: Int(confidence),
+                    focus: Int(focus),
+                    mood: Int(mood),
+                    note: note.isEmpty ? nil : note
+                )
+
+                // Haptic feedback
+                let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+                impactFeedback.impactOccurred()
+
+                dismiss()
+            } catch {
+                errorMessage = error.localizedDescription
+                showError = true
+                isSaving = false
             }
         }
     }

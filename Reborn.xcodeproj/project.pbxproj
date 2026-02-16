@@ -7,6 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD3C772D2F3C4BFF0064CB9A /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C772A2F3C4BFF0064CB9A /* AppContainer.swift */; };
+		DD3C77642F3C4C230064CB9A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77622F3C4C230064CB9A /* ContentView.swift */; };
+		DD3C77652F3C4C230064CB9A /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77302F3C4C230064CB9A /* Milestone.swift */; };
+		DD3C77662F3C4C230064CB9A /* MilestoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77492F3C4C230064CB9A /* MilestoneViewModel.swift */; };
+		DD3C77672F3C4C230064CB9A /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77482F3C4C230064CB9A /* JournalViewModel.swift */; };
+		DD3C77682F3C4C230064CB9A /* MockJournalDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C773A2F3C4C230064CB9A /* MockJournalDataService.swift */; };
+		DD3C77692F3C4C230064CB9A /* MotivationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C775D2F3C4C230064CB9A /* MotivationCardView.swift */; };
+		DD3C776A2F3C4C230064CB9A /* CinematicCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C774C2F3C4C230064CB9A /* CinematicCarousel.swift */; };
+		DD3C776B2F3C4C230064CB9A /* HeroSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C774F2F3C4C230064CB9A /* HeroSection.swift */; };
+		DD3C776C2F3C4C230064CB9A /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77552F3C4C230064CB9A /* CheckInView.swift */; };
+		DD3C776D2F3C4C230064CB9A /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77602F3C4C230064CB9A /* StatsView.swift */; };
+		DD3C776E2F3C4C230064CB9A /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77312F3C4C230064CB9A /* Streak.swift */; };
+		DD3C776F2F3C4C230064CB9A /* MoodSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77572F3C4C230064CB9A /* MoodSliderView.swift */; };
+		DD3C77702F3C4C230064CB9A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77442F3C4C230064CB9A /* Constants.swift */; };
+		DD3C77712F3C4C230064CB9A /* SOSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C775E2F3C4C230064CB9A /* SOSView.swift */; };
+		DD3C77722F3C4C230064CB9A /* DateCalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C773D2F3C4C230064CB9A /* DateCalculationService.swift */; };
+		DD3C77732F3C4C230064CB9A /* SwiftDataStreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77372F3C4C230064CB9A /* SwiftDataStreakService.swift */; };
+		DD3C77742F3C4C230064CB9A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77522F3C4C230064CB9A /* HomeView.swift */; };
+		DD3C77752F3C4C230064CB9A /* Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77502F3C4C230064CB9A /* Transitions.swift */; };
+		DD3C77762F3C4C230064CB9A /* AppErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77342F3C4C230064CB9A /* AppErrorHandler.swift */; };
+		DD3C77772F3C4C230064CB9A /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C774E2F3C4C230064CB9A /* GradientBackground.swift */; };
+		DD3C77782F3C4C230064CB9A /* MockStreakDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C773B2F3C4C230064CB9A /* MockStreakDataService.swift */; };
+		DD3C77792F3C4C230064CB9A /* ErrorHandlingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C773E2F3C4C230064CB9A /* ErrorHandlingService.swift */; };
+		DD3C777A2F3C4C230064CB9A /* SwiftDataJournalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77362F3C4C230064CB9A /* SwiftDataJournalService.swift */; };
+		DD3C777B2F3C4C230064CB9A /* MilestoneCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77592F3C4C230064CB9A /* MilestoneCardView.swift */; };
+		DD3C777C2F3C4C230064CB9A /* Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77452F3C4C230064CB9A /* Quotes.swift */; };
+		DD3C777D2F3C4C230064CB9A /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C772E2F3C4C230064CB9A /* AppError.swift */; };
+		DD3C777E2F3C4C230064CB9A /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77432F3C4C230064CB9A /* Animations.swift */; };
+		DD3C777F2F3C4C230064CB9A /* MockDateCalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77392F3C4C230064CB9A /* MockDateCalculationService.swift */; };
+		DD3C77802F3C4C230064CB9A /* GlowingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C774D2F3C4C230064CB9A /* GlowingButton.swift */; };
+		DD3C77812F3C4C230064CB9A /* JournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C772F2F3C4C230064CB9A /* JournalEntry.swift */; };
+		DD3C77822F3C4C230064CB9A /* MilestonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C775A2F3C4C230064CB9A /* MilestonesView.swift */; };
+		DD3C77832F3C4C230064CB9A /* JournalDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C773F2F3C4C230064CB9A /* JournalDataService.swift */; };
+		DD3C77842F3C4C230064CB9A /* JournalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77562F3C4C230064CB9A /* JournalListView.swift */; };
+		DD3C77852F3C4C230064CB9A /* StreakDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77402F3C4C230064CB9A /* StreakDataService.swift */; };
+		DD3C77862F3C4C230064CB9A /* BreathingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C775C2F3C4C230064CB9A /* BreathingView.swift */; };
+		DD3C77872F3C4C230064CB9A /* StreakViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C774A2F3C4C230064CB9A /* StreakViewModel.swift */; };
+		DD3C77882F3C4C230064CB9A /* StreakRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77532F3C4C230064CB9A /* StreakRingView.swift */; };
+		DD3C77892F3C4C230064CB9A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77462F3C4C230064CB9A /* Theme.swift */; };
+		DD3C778A2F3C4C230064CB9A /* StreakTimeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3C77352F3C4C230064CB9A /* StreakTimeCalculator.swift */; };
 		E70000010000000000000001 /* RewireApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7000001000000000000A001 /* RewireApp.swift */; };
 		E70000010000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7000001000000000000A002 /* ContentView.swift */; };
 		E70000010000000000000003 /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7000001000000000000A003 /* Streak.swift */; };
@@ -34,6 +74,47 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD3C772A2F3C4BFF0064CB9A /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		DD3C772E2F3C4C230064CB9A /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		DD3C772F2F3C4C230064CB9A /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
+		DD3C77302F3C4C230064CB9A /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
+		DD3C77312F3C4C230064CB9A /* Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streak.swift; sourceTree = "<group>"; };
+		DD3C77342F3C4C230064CB9A /* AppErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrorHandler.swift; sourceTree = "<group>"; };
+		DD3C77352F3C4C230064CB9A /* StreakTimeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakTimeCalculator.swift; sourceTree = "<group>"; };
+		DD3C77362F3C4C230064CB9A /* SwiftDataJournalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataJournalService.swift; sourceTree = "<group>"; };
+		DD3C77372F3C4C230064CB9A /* SwiftDataStreakService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataStreakService.swift; sourceTree = "<group>"; };
+		DD3C77392F3C4C230064CB9A /* MockDateCalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDateCalculationService.swift; sourceTree = "<group>"; };
+		DD3C773A2F3C4C230064CB9A /* MockJournalDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockJournalDataService.swift; sourceTree = "<group>"; };
+		DD3C773B2F3C4C230064CB9A /* MockStreakDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStreakDataService.swift; sourceTree = "<group>"; };
+		DD3C773D2F3C4C230064CB9A /* DateCalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculationService.swift; sourceTree = "<group>"; };
+		DD3C773E2F3C4C230064CB9A /* ErrorHandlingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingService.swift; sourceTree = "<group>"; };
+		DD3C773F2F3C4C230064CB9A /* JournalDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalDataService.swift; sourceTree = "<group>"; };
+		DD3C77402F3C4C230064CB9A /* StreakDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakDataService.swift; sourceTree = "<group>"; };
+		DD3C77432F3C4C230064CB9A /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		DD3C77442F3C4C230064CB9A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DD3C77452F3C4C230064CB9A /* Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quotes.swift; sourceTree = "<group>"; };
+		DD3C77462F3C4C230064CB9A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		DD3C77482F3C4C230064CB9A /* JournalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalViewModel.swift; sourceTree = "<group>"; };
+		DD3C77492F3C4C230064CB9A /* MilestoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewModel.swift; sourceTree = "<group>"; };
+		DD3C774A2F3C4C230064CB9A /* StreakViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakViewModel.swift; sourceTree = "<group>"; };
+		DD3C774C2F3C4C230064CB9A /* CinematicCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinematicCarousel.swift; sourceTree = "<group>"; };
+		DD3C774D2F3C4C230064CB9A /* GlowingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingButton.swift; sourceTree = "<group>"; };
+		DD3C774E2F3C4C230064CB9A /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
+		DD3C774F2F3C4C230064CB9A /* HeroSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroSection.swift; sourceTree = "<group>"; };
+		DD3C77502F3C4C230064CB9A /* Transitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitions.swift; sourceTree = "<group>"; };
+		DD3C77522F3C4C230064CB9A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DD3C77532F3C4C230064CB9A /* StreakRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakRingView.swift; sourceTree = "<group>"; };
+		DD3C77552F3C4C230064CB9A /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInView.swift; sourceTree = "<group>"; };
+		DD3C77562F3C4C230064CB9A /* JournalListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalListView.swift; sourceTree = "<group>"; };
+		DD3C77572F3C4C230064CB9A /* MoodSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodSliderView.swift; sourceTree = "<group>"; };
+		DD3C77592F3C4C230064CB9A /* MilestoneCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCardView.swift; sourceTree = "<group>"; };
+		DD3C775A2F3C4C230064CB9A /* MilestonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesView.swift; sourceTree = "<group>"; };
+		DD3C775C2F3C4C230064CB9A /* BreathingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingView.swift; sourceTree = "<group>"; };
+		DD3C775D2F3C4C230064CB9A /* MotivationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivationCardView.swift; sourceTree = "<group>"; };
+		DD3C775E2F3C4C230064CB9A /* SOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSView.swift; sourceTree = "<group>"; };
+		DD3C77602F3C4C230064CB9A /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		DD3C77622F3C4C230064CB9A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E700000100000000000000F0 /* Reborn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reborn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7000001000000000000A001 /* RewireApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewireApp.swift; sourceTree = "<group>"; };
 		E7000001000000000000A002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E7000001000000000000A003 /* Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streak.swift; sourceTree = "<group>"; };
@@ -58,8 +139,6 @@
 		E7000001000000000000A022 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		E7000001000000000000A023 /* Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quotes.swift; sourceTree = "<group>"; };
 		E7000001000000000000A024 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E7000001000000000000A025 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E700000100000000000000F0 /* Reborn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reborn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +152,175 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DD3C772B2F3C4BFF0064CB9A /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C772A2F3C4BFF0064CB9A /* AppContainer.swift */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
+		DD3C772C2F3C4BFF0064CB9A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C772B2F3C4BFF0064CB9A /* Container */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		DD3C77322F3C4C230064CB9A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C772E2F3C4C230064CB9A /* AppError.swift */,
+				DD3C772F2F3C4C230064CB9A /* JournalEntry.swift */,
+				DD3C77302F3C4C230064CB9A /* Milestone.swift */,
+				DD3C77312F3C4C230064CB9A /* Streak.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DD3C77332F3C4C230064CB9A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DD3C77382F3C4C230064CB9A /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77342F3C4C230064CB9A /* AppErrorHandler.swift */,
+				DD3C77352F3C4C230064CB9A /* StreakTimeCalculator.swift */,
+				DD3C77362F3C4C230064CB9A /* SwiftDataJournalService.swift */,
+				DD3C77372F3C4C230064CB9A /* SwiftDataStreakService.swift */,
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
+		DD3C773C2F3C4C230064CB9A /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77392F3C4C230064CB9A /* MockDateCalculationService.swift */,
+				DD3C773A2F3C4C230064CB9A /* MockJournalDataService.swift */,
+				DD3C773B2F3C4C230064CB9A /* MockStreakDataService.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		DD3C77412F3C4C230064CB9A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C773D2F3C4C230064CB9A /* DateCalculationService.swift */,
+				DD3C773E2F3C4C230064CB9A /* ErrorHandlingService.swift */,
+				DD3C773F2F3C4C230064CB9A /* JournalDataService.swift */,
+				DD3C77402F3C4C230064CB9A /* StreakDataService.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		DD3C77422F3C4C230064CB9A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77382F3C4C230064CB9A /* Implementation */,
+				DD3C773C2F3C4C230064CB9A /* Mock */,
+				DD3C77412F3C4C230064CB9A /* Protocols */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		DD3C77472F3C4C230064CB9A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77432F3C4C230064CB9A /* Animations.swift */,
+				DD3C77442F3C4C230064CB9A /* Constants.swift */,
+				DD3C77452F3C4C230064CB9A /* Quotes.swift */,
+				DD3C77462F3C4C230064CB9A /* Theme.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		DD3C774B2F3C4C230064CB9A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77482F3C4C230064CB9A /* JournalViewModel.swift */,
+				DD3C77492F3C4C230064CB9A /* MilestoneViewModel.swift */,
+				DD3C774A2F3C4C230064CB9A /* StreakViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		DD3C77512F3C4C230064CB9A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C774C2F3C4C230064CB9A /* CinematicCarousel.swift */,
+				DD3C774D2F3C4C230064CB9A /* GlowingButton.swift */,
+				DD3C774E2F3C4C230064CB9A /* GradientBackground.swift */,
+				DD3C774F2F3C4C230064CB9A /* HeroSection.swift */,
+				DD3C77502F3C4C230064CB9A /* Transitions.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		DD3C77542F3C4C230064CB9A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77522F3C4C230064CB9A /* HomeView.swift */,
+				DD3C77532F3C4C230064CB9A /* StreakRingView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DD3C77582F3C4C230064CB9A /* Journal */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77552F3C4C230064CB9A /* CheckInView.swift */,
+				DD3C77562F3C4C230064CB9A /* JournalListView.swift */,
+				DD3C77572F3C4C230064CB9A /* MoodSliderView.swift */,
+			);
+			path = Journal;
+			sourceTree = "<group>";
+		};
+		DD3C775B2F3C4C230064CB9A /* Milestones */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77592F3C4C230064CB9A /* MilestoneCardView.swift */,
+				DD3C775A2F3C4C230064CB9A /* MilestonesView.swift */,
+			);
+			path = Milestones;
+			sourceTree = "<group>";
+		};
+		DD3C775F2F3C4C230064CB9A /* SOS */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C775C2F3C4C230064CB9A /* BreathingView.swift */,
+				DD3C775D2F3C4C230064CB9A /* MotivationCardView.swift */,
+				DD3C775E2F3C4C230064CB9A /* SOSView.swift */,
+			);
+			path = SOS;
+			sourceTree = "<group>";
+		};
+		DD3C77612F3C4C230064CB9A /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77602F3C4C230064CB9A /* StatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		DD3C77632F3C4C230064CB9A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DD3C77512F3C4C230064CB9A /* Components */,
+				DD3C77542F3C4C230064CB9A /* Home */,
+				DD3C77582F3C4C230064CB9A /* Journal */,
+				DD3C775B2F3C4C230064CB9A /* Milestones */,
+				DD3C775F2F3C4C230064CB9A /* SOS */,
+				DD3C77612F3C4C230064CB9A /* Stats */,
+				DD3C77622F3C4C230064CB9A /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E700000100000000000000D0 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +332,13 @@
 		E700000100000000000000D1 /* Reborn */ = {
 			isa = PBXGroup;
 			children = (
+				DD3C77322F3C4C230064CB9A /* Models */,
+				DD3C77332F3C4C230064CB9A /* Preview Content */,
+				DD3C77422F3C4C230064CB9A /* Services */,
+				DD3C77472F3C4C230064CB9A /* Utils */,
+				DD3C774B2F3C4C230064CB9A /* ViewModels */,
+				DD3C77632F3C4C230064CB9A /* Views */,
+				DD3C772C2F3C4BFF0064CB9A /* App */,
 				E7000001000000000000A001 /* RewireApp.swift */,
 				E700000100000000000000D3 /* Models */,
 				E700000100000000000000D4 /* ViewModels */,
@@ -277,12 +532,51 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E70000010000000000000001 /* RebornApp.swift in Sources */,
+				E70000010000000000000001 /* RewireApp.swift in Sources */,
 				E70000010000000000000002 /* ContentView.swift in Sources */,
 				E70000010000000000000003 /* Streak.swift in Sources */,
 				E70000010000000000000004 /* JournalEntry.swift in Sources */,
 				E70000010000000000000005 /* Milestone.swift in Sources */,
 				E70000010000000000000006 /* StreakViewModel.swift in Sources */,
+				DD3C77642F3C4C230064CB9A /* ContentView.swift in Sources */,
+				DD3C77652F3C4C230064CB9A /* Milestone.swift in Sources */,
+				DD3C77662F3C4C230064CB9A /* MilestoneViewModel.swift in Sources */,
+				DD3C77672F3C4C230064CB9A /* JournalViewModel.swift in Sources */,
+				DD3C77682F3C4C230064CB9A /* MockJournalDataService.swift in Sources */,
+				DD3C77692F3C4C230064CB9A /* MotivationCardView.swift in Sources */,
+				DD3C776A2F3C4C230064CB9A /* CinematicCarousel.swift in Sources */,
+				DD3C776B2F3C4C230064CB9A /* HeroSection.swift in Sources */,
+				DD3C776C2F3C4C230064CB9A /* CheckInView.swift in Sources */,
+				DD3C776D2F3C4C230064CB9A /* StatsView.swift in Sources */,
+				DD3C776E2F3C4C230064CB9A /* Streak.swift in Sources */,
+				DD3C776F2F3C4C230064CB9A /* MoodSliderView.swift in Sources */,
+				DD3C77702F3C4C230064CB9A /* Constants.swift in Sources */,
+				DD3C77712F3C4C230064CB9A /* SOSView.swift in Sources */,
+				DD3C77722F3C4C230064CB9A /* DateCalculationService.swift in Sources */,
+				DD3C77732F3C4C230064CB9A /* SwiftDataStreakService.swift in Sources */,
+				DD3C77742F3C4C230064CB9A /* HomeView.swift in Sources */,
+				DD3C77752F3C4C230064CB9A /* Transitions.swift in Sources */,
+				DD3C77762F3C4C230064CB9A /* AppErrorHandler.swift in Sources */,
+				DD3C77772F3C4C230064CB9A /* GradientBackground.swift in Sources */,
+				DD3C77782F3C4C230064CB9A /* MockStreakDataService.swift in Sources */,
+				DD3C77792F3C4C230064CB9A /* ErrorHandlingService.swift in Sources */,
+				DD3C777A2F3C4C230064CB9A /* SwiftDataJournalService.swift in Sources */,
+				DD3C777B2F3C4C230064CB9A /* MilestoneCardView.swift in Sources */,
+				DD3C777C2F3C4C230064CB9A /* Quotes.swift in Sources */,
+				DD3C777D2F3C4C230064CB9A /* AppError.swift in Sources */,
+				DD3C777E2F3C4C230064CB9A /* Animations.swift in Sources */,
+				DD3C777F2F3C4C230064CB9A /* MockDateCalculationService.swift in Sources */,
+				DD3C77802F3C4C230064CB9A /* GlowingButton.swift in Sources */,
+				DD3C77812F3C4C230064CB9A /* JournalEntry.swift in Sources */,
+				DD3C77822F3C4C230064CB9A /* MilestonesView.swift in Sources */,
+				DD3C77832F3C4C230064CB9A /* JournalDataService.swift in Sources */,
+				DD3C77842F3C4C230064CB9A /* JournalListView.swift in Sources */,
+				DD3C77852F3C4C230064CB9A /* StreakDataService.swift in Sources */,
+				DD3C77862F3C4C230064CB9A /* BreathingView.swift in Sources */,
+				DD3C77872F3C4C230064CB9A /* StreakViewModel.swift in Sources */,
+				DD3C77882F3C4C230064CB9A /* StreakRingView.swift in Sources */,
+				DD3C77892F3C4C230064CB9A /* Theme.swift in Sources */,
+				DD3C778A2F3C4C230064CB9A /* StreakTimeCalculator.swift in Sources */,
 				E70000010000000000000007 /* JournalViewModel.swift in Sources */,
 				E70000010000000000000008 /* MilestoneViewModel.swift in Sources */,
 				E70000010000000000000009 /* HomeView.swift in Sources */,
@@ -294,6 +588,7 @@
 				E70000010000000000000015 /* CheckInView.swift in Sources */,
 				E70000010000000000000016 /* MoodSliderView.swift in Sources */,
 				E70000010000000000000017 /* MilestonesView.swift in Sources */,
+				DD3C772D2F3C4BFF0064CB9A /* AppContainer.swift in Sources */,
 				E70000010000000000000018 /* MilestoneCardView.swift in Sources */,
 				E70000010000000000000019 /* StatsView.swift in Sources */,
 				E70000010000000000000020 /* GlowingButton.swift in Sources */,
@@ -433,6 +728,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Reborn/Preview Content\"";
+				DEVELOPMENT_TEAM = 4DMVPYHYH5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Rewire;
@@ -446,7 +742,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rewire.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kkrneuro.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -464,6 +760,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Reborn/Preview Content\"";
+				DEVELOPMENT_TEAM = 4DMVPYHYH5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Rewire;
@@ -477,7 +774,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rewire.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kkrneuro.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
